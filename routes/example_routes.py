@@ -1,25 +1,42 @@
+import json
+from flask import request
 from apiflask import APIBlueprint
+from models import db, Character
 
 bp = APIBlueprint('examples', __name__)
 
 @bp.get('/examples')
 def get_examples():
-    examples = [
+    characters = Character.query.filter_by(is_example=True).all()
+
+    return {'examples': [
         {
-            'type': 'dragonling',
-            'occupation': 'relic hunter',
-            'style': 'steampunk',
-            'disposition': 'mischievous',
-            'palette': ['#8B0000', '#DAA520', '#5F9EA0'],
-            'accessory': 'a mechanical gauntlet'
-        },
-        {
-            'type': 'slime',
-            'occupation': 'street‑food vendor',
-            'style': 'cyberpunk',
-            'disposition': 'serene',
-            'palette': ['#0FF0FC', '#FF10F0', '#39FF14'],
-            'accessory': 'a levitating lantern'
-        }
-    ]
-    return {'examples': examples}
+            'type': c.type,
+            'occupation': c.occupation,
+            'style': c.style,
+            'disposition': c.disposition,
+            'palette': json.loads(c.palette),
+            'accessory': c.accessory
+        } for c in characters
+    ]}
+
+@bp.post('/examples')
+def add_example():
+    data = request.json
+    required = ['type', 'occupation', 'style', 'disposition', 'palette', 'accessory']
+    if not all(key in data for key in required):
+        return {'error': 'Missing required fields'}, 400
+
+    character = Character(
+        type=data['type'],
+        occupation=data['occupation'],
+        style=data['style'],
+        disposition=data['disposition'],
+        palette=json.dumps(data['palette']),
+        accessory=data['accessory'],
+        is_example=True
+    )
+    db.session.add(character)
+    db.session.commit()
+
+    return {'message': 'Example character added successfully'}, 201
