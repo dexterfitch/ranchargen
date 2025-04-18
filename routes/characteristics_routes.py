@@ -65,7 +65,7 @@ def edit_characteristic(id):
     if not all(key in data for key in required):
         return {'error': 'Missing name or category'}, 400
 
-    characteristic = Characteristic.query.get(id)
+    characteristic = db.session.get(Characteristic, id)
     if not characteristic:
         return {'error': 'Characteristic not found'}, 404
 
@@ -86,7 +86,7 @@ def edit_characteristic(id):
 @bp.delete('/characteristics/<int:id>')
 @require_admin_token
 def delete_characteristic(id):
-    characteristic = Characteristic.query.get(id)
+    characteristic = db.session.get(Characteristic, id)
     if not characteristic:
         return {'error': 'Characteristic not found'}, 404
 

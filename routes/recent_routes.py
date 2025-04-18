@@ -15,7 +15,7 @@ def get_recent_characters():
 @bp.delete('/recent/<int:id>')
 @require_admin_token
 def delete_recent_character(id):
-    character = Character.query.get(id)
+    character = db.session.get(Character, id)
 
     if not character or character.is_example:
         return {'error': 'Recent character not found'}, 404

@@ -55,7 +55,7 @@ def update_example(id):
     if not all(key in data for key in required):
         return {'error': 'Missing required fields'}, 400
 
-    character = Character.query.get(id)
+    character = db.session.get(Character, id)
     if not character or not character.is_example:
         return {'error': 'Example character not found'}, 404
 
@@ -82,7 +82,7 @@ def update_example(id):
 @bp.delete('/examples/<int:id>')
 @require_admin_token
 def delete_example(id):
-    character = Character.query.get(id)
+    character = db.session.get(Character, id)
     if not character or not character.is_example:
         return {'error': 'Example character not found'}, 404
 

@@ -47,7 +47,7 @@ def generate_character():
 @bp.get('/characters/<int:id>')
 @require_admin_token
 def get_character_by_id(id):
-    character = Character.query.get(id)
+    character = db.session.get(Character, id)
     if not character:
         return {'error': 'Character not found'}, 404
 
