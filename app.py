@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
 from apiflask import APIFlask # type: ignore
 from models import db
 
@@ -24,4 +26,4 @@ app.register_blueprint(example_bp)
 app.register_blueprint(characteristics_bp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded=False)

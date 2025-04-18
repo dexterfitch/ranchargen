@@ -1,6 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy # type: ignore
-
-db = SQLAlchemy()
+from .db import db
+import json
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,14 +12,15 @@ class Character(db.Model):
     is_example = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-class Characteristic(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-
-    def to_dict(self):
+    def serialize(self):
         return {
             "id": self.id,
-            "name": self.name,
-            "category": self.category
+            "type": self.type,
+            "occupation": self.occupation,
+            "style": self.style,
+            "disposition": self.disposition,
+            "palette": json.loads(self.palette) if self.palette else [],
+            "accessory": self.accessory,
+            "is_example": self.is_example,
+            "created_at": self.created_at.isoformat() if self.created_at else None
         }
