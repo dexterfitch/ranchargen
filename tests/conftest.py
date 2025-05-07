@@ -8,6 +8,10 @@ from models.character import Character
 from models.characteristic import Characteristic
 from models.palette import Palette
 
+# Get base directory
+basedir = os.path.abspath(os.path.dirname(__file__))
+test_db_path = os.path.join(basedir, "test.db")
+
 # Load environment variables
 load_dotenv()
 
@@ -18,20 +22,23 @@ ADMIN_HEADERS = {"x-admin-token": os.getenv("ADMIN_TOKEN", "")}
 def app():
     flask_app.config.update({
         "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///" + test_db_path,
         "SQLALCHEMY_TRACK_MODIFICATIONS": False
     })
 
     with flask_app.app_context():
+        if os.path.exists(test_db_path):
+            os.remove(test_db_path)
         db.create_all()
         yield flask_app
         db.session.remove()
         db.drop_all()
+        if os.path.exists(test_db_path):
+            os.remove(test_db_path)
 
 @pytest.fixture(autouse=True)
 def seed_data(app):
     with app.app_context():
-        # Seed characteristics
         categories = {
             "type": ["ghost", "slime", "imp"],
             "occupation": ["bard", "baker", "necromancer"],
@@ -44,7 +51,6 @@ def seed_data(app):
             for name in names:
                 db.session.add(Characteristic(name=name, category=category))
 
-        # Seed palettes
         palettes = [
             {
                 "name": "Tropical Fruit",
@@ -61,7 +67,6 @@ def seed_data(app):
 
         db.session.commit()
 
-        # Seed an example character
         example_character = Character(
             type="ghost",
             occupation="bard",
@@ -73,7 +78,6 @@ def seed_data(app):
         )
         db.session.add(example_character)
 
-        # Seed a recent character
         recent_character = Character(
             type="slime",
             occupation="baker",

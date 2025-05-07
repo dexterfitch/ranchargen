@@ -1,0 +1,13 @@
+.palette-boxes {
+    display: flex;
+    gap: 8px;
+}
+.palette-boxes p {
+    margin: 0;
+}
+.swatch {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

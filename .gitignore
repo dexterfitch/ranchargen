@@ -1,6 +1,5 @@
 # Bytecode
 __pycache__/
-routes/__pycache__/*
 *.py[cod]
 *.pyo
 
@@ -9,9 +8,11 @@ routes/__pycache__/*
 env/
 venv/
 
-# Environment variables / IDE settings
+# Environment variables
 .env
 *.env
+
+# IDE settings
 .vscode/
 .idea/
 
@@ -27,19 +28,40 @@ Thumbs.db
 *.log
 
 # Cache
-*.cache
-.cache/
-
-# Python egg files
+*.cache/
 *.egg-info/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Python build
 dist/
 build/
 
-# pytest and coverage
-.coverage
-htmlcov/
-.pytest_cache/
-
-# Jupyter notebooks (if you add any)
+# Jupyter notebooks
 .ipynb_checkpoints/
 
+# Frontend: Angular-specific ignores
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.angular/
+/frontend/.angular/cache/
+/frontend/tmp/
+/frontend/out-tsc/
+/frontend/.env
+/frontend/.env.*.local
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+
+# Misc
+/frontend/sass-cache/
+/frontend/connect.lock
+/frontend/coverage
+/frontend/libpeerconnection.log
+/frontend/testem.log
+/frontend/typings
+
+# Editor backup files
+*.swp
+*.swo
+*~
