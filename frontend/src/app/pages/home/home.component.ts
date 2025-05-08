@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Character, CharacterService } from '../../services/character.service';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../../components/header/header.component';
+import { Character } from '../../models/character.model';
+import { CharacterService } from '../../services/character.service';
+import { CharacterCardComponent } from '../../components/character-card/character-card.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent, CharacterCardComponent],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

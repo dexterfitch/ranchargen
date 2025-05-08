@@ -1,21 +1,9 @@
-<div class="character-container">
-    <h2>Random Character</h2>
-    <div *ngIf="loading">Loading...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
-    <div class="character-card" *ngIf="!loading && !error && character">
-        <p><strong>Type:</strong> {{ character?.type }}</p>
-        <p><strong>Occupation:</strong> {{ character?.occupation }}</p>
-        <p><strong>Style:</strong> {{ character?.style }}</p>
-        <p><strong>Disposition:</strong> {{ character?.disposition }}</p>
-        <div class="palette-boxes">
-            <p><strong>Palette:</strong> {{ character.palette.name }}</p>
-            <span *ngFor="let color of character.palette.colors"
-                class="swatch"
-                [ngStyle]="{ 'background-color': color }"
-                [title]="color">
-            </span>
-        </div>
-        <p><strong>Accessory:</strong> {{ character?.accessory }}</p>
-        <button (click)="getCharacter()">Get Another Random Character</button>
-    </div>
-</div>
+<app-header></app-header>
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+<app-character-card 
+    [character]="character"
+    title="Random Character"
+></app-character-card>
+<br />
+<button (click)="getCharacter()">Get Another Random Character</button>

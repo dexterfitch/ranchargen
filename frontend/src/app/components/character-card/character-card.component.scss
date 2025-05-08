@@ -1,0 +1,43 @@
+.character-card {
+    .palette {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    
+        .swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            position: relative;
+            transition: transform 0.1s ease-in-out;
+    
+            &:hover {
+                transform: scale(1.1);
+            }
+    
+            .tooltip {
+                position: absolute;
+                top: -24px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: black;
+                color: white;
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                z-index: 10;
+            }
+        }
+
+        .visually-hidden {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+    }
+}
