@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Character } from '../models/character.model';
 
 @Injectable({
@@ -16,7 +17,9 @@ export class CharacterService {
   }
 
   getRecentCharacters(): Observable<Character[]> {
-    return this.http.get<Character[]>(`${this.baseUrl}/recent`);
+    return this.http.get<{ recent: Character[] }>(`${this.baseUrl}/recent`).pipe(
+      map(response => response.recent)
+    );
   }
 
   getExampleCharacters(): Observable<Character[]> {

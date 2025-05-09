@@ -1,0 +1,12 @@
+<section class="recent-characters">
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div class="character-grid" *ngIf="!loading && !error">
+        <app-character-card
+            *ngFor="let character of recentCharacters"
+            [character]="character"
+            [title]="'Recently Generated'">
+        </app-character-card>
+    </div>
+</section>

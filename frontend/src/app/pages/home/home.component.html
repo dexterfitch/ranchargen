@@ -5,5 +5,10 @@
     [character]="character"
     title="Random Character"
 ></app-character-card>
-<br />
-<button (click)="getCharacter()">Get Another Random Character</button>
+<div class="random-button-section">
+    <button (click)="getCharacter()" [disabled]="loading">
+        {{ loading ? 'Loading...' : 'Get Another Random Character' }}
+    </button>
+    <div class="loading-spinner" *ngIf="loading" aria-hidden="true"></div>
+</div>
+<app-recent-characters />

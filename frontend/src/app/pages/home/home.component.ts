@@ -4,10 +4,11 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { Character } from '../../models/character.model';
 import { CharacterService } from '../../services/character.service';
 import { CharacterCardComponent } from '../../components/character-card/character-card.component';
+import { RecentCharactersComponent } from '../../components/recent-characters/recent-characters.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, HeaderComponent, CharacterCardComponent],
+  imports: [CommonModule, HeaderComponent, CharacterCardComponent, RecentCharactersComponent],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -29,7 +30,9 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.character = data;
         this.error = '';
-        this.loading = false;
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
       },
       error: (err) => {
         console.error(err);
