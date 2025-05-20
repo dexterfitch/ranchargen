@@ -12,7 +12,7 @@
             class="swatch" 
             *ngFor="let color of character.palette.colors" 
             [style.background]="color"
-            [title]="color"
+            [title]="'Click to copy ' + color"
             role="button"
             tabindex="0"
             (click)="copyToClipboard(color, $event)"

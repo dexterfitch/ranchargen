@@ -1,12 +1,21 @@
-<section class="recent-characters">
-    <div *ngIf="loading">Loading...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
+<div *ngIf="loading">Loading recent characters...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
 
-    <div class="character-grid" *ngIf="!loading && !error">
-        <app-character-card
-            *ngFor="let character of recentCharacters"
-            [character]="character"
-            [title]="'Recently Generated'">
-        </app-character-card>
-    </div>
-</section>
+<div *ngFor="let character of recentCharacters" class="recent-character-summary">
+    <p>
+        <span 
+            *ngFor="let color of character.palette.colors" 
+            class="swatch" 
+            [style.background]="color"
+            [title]="'Click to copy ' + color"
+            role="button"
+            tabindex="0"
+            (click)="copyToClipboard(color, $event)"
+            (keydown.enter)="copyToClipboard(color, $event)"
+            [attr.aria-label]="'Copy ' + color + ' to clipboard'"
+        ></span>
+        {{ getArticle(character.type) }} <strong>{{ character.type }}</strong> who is a <strong>{{ character.occupation }}</strong>
+        with a <strong>{{ character.disposition }}</strong> disposition,
+        a <strong>{{ character.style }}</strong> style, and <strong>{{ character.accessory }}</strong>.
+    </p>
+</div>

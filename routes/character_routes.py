@@ -35,7 +35,7 @@ def generate_character():
     palette_row = Palette.query.order_by(func.random()).first()
     palette = palette_row.to_dict() if palette_row else None
 
-    return {
+    character_data = {
         "type": get_random_characteristic("type"),
         "occupation": get_random_characteristic("occupation"),
         "style": get_random_characteristic("style"),
@@ -43,6 +43,27 @@ def generate_character():
         "palette": palette,
         "accessory": get_random_characteristic("accessory")
     }
+
+    valid, palette_or_response, error_code = validate_character_input(character_data)
+    recent = Character.query.filter_by(is_example=False).order_by(Character.created_at.asc()).all()
+    if valid:
+        if len(recent) >= 5:
+            db.session.delete(recent[0])
+
+        new_character = Character(
+            type=character_data["type"],
+            occupation=character_data["occupation"],
+            style=character_data["style"],
+            disposition=character_data["disposition"],
+            palette=palette_or_response.colors,
+            accessory=character_data["accessory"],
+            is_example=False
+        )
+        db.session.add(new_character)
+        db.session.commit()
+    else:
+        print("Failed to validate random character before saving.", palette_or_response, error_code)
+    return character_data
 
 @bp.get("/characters/<int:id>")
 @require_admin_token

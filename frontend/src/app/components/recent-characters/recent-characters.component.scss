@@ -1,0 +1,35 @@
+.recent-character-summary {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fafafa;
+    font-size: 75%;
+}
+
+.recent-character-summary p {
+    margin: 0;
+}
+
+.palette {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.swatch {
+    width: 12px;
+    height: 12px;
+    margin-right: 0.25rem;
+    border-radius: 3px;
+    border: 1px solid #999;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.1s ease-in-out;
+
+    &:hover,
+    &:focus {
+        transform: scale(1.1);
+    }
+}

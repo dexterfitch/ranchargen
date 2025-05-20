@@ -22,20 +22,8 @@ export class CharacterCardComponent {
     const swatch = event.currentTarget as HTMLElement;
     if (!swatch) return;
 
-    navigator.clipboard.writeText(color).then(() => {
-        const tooltip = this.renderer.createElement('span');
-        this.renderer.addClass(tooltip, 'tooltip');
-        const text = this.renderer.createText('Copied!');
-        this.renderer.appendChild(tooltip, text);
-        this.renderer.appendChild(swatch, tooltip);
-        this.liveMessage = 'Copied to clipboard!';
-
-        setTimeout(() => {
-            this.renderer.removeChild(swatch, tooltip);
-            this.liveMessage = '';
-        }, 1000);
-    }).catch(err => {
-        console.error('Failed to copy to clipboard:', err);
+    navigator.clipboard.writeText(color).catch(err => {
+      console.error('Failed to copy to clipboard:', err);
     });
   }
 }

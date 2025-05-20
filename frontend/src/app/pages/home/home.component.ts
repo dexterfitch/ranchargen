@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   character: Character | null = null;
   loading = false;
   error: string = '';
+  recentRefreshToken = 0;
 
   constructor(private characterService: CharacterService) {}
 
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
     this.characterService.getRandomCharacter().subscribe({
       next: (data) => {
         this.character = data;
+        this.recentRefreshToken++;
         this.error = '';
         setTimeout(() => {
           this.loading = false;

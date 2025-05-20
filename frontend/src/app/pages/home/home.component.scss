@@ -21,7 +21,22 @@
 
     @keyframes spin {
         to {
-        transform: rotate(360deg);
+            transform: rotate(360deg);
         }
+    }
+}
+
+.warning-section {
+    background-color: #fff3cd;
+    color: #856404;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    
+    .error {
+        background-color: #ffcdcd;
+        color: #850404;
     }
 }
