@@ -1,0 +1,44 @@
+<div *ngIf="character" class="container mt-4">
+  <h2 class="mb-3">Advanced Edit Mode</h2>
+
+  <div class="row g-4">
+    <div
+      class="col-md-6"
+      *ngFor="let trait of traitKeys"
+    >
+      <div class="card p-3 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <strong>{{ trait | titlecase }}</strong>
+          <label class="form-check-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="locked[castKey(trait)]"
+              class="form-check-input"
+            />
+            Lock
+          </label>
+        </div>
+
+        <p *ngIf="trait !== 'palette'">
+          {{ character[castKey(trait)] }}
+        </p>
+
+        <div *ngIf="trait === 'palette'">
+          <p><em>{{ character.palette.name }}</em></p>
+          <div class="d-flex gap-2">
+            <span
+              *ngFor="let color of character.palette.colors"
+              class="swatch"
+              [style.background]="color"
+              [title]="color"
+            ></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <button class="btn btn-primary" (click)="randomizeUnlocked()">Randomize Unlocked</button>
+  </div>
+</div>

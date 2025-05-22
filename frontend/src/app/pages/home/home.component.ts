@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../components/header/header.component';
 import { Character } from '../../models/character.model';
 import { CharacterService } from '../../services/character.service';
 import { CharacterCardComponent } from '../../components/character-card/character-card.component';
@@ -8,16 +7,17 @@ import { RecentCharactersComponent } from '../../components/recent-characters/re
 
 @Component({
   standalone: true,
-  imports: [CommonModule, HeaderComponent, CharacterCardComponent, RecentCharactersComponent],
+  imports: [CommonModule, CharacterCardComponent, RecentCharactersComponent],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   character: Character | null = null;
-  loading = false;
-  error: string = '';
   recentRefreshToken = 0;
+
+  @Output() errorChange = new EventEmitter<string>();
+  @Output() loadingChange = new EventEmitter<boolean>();
 
   constructor(private characterService: CharacterService) {}
 
@@ -26,20 +26,19 @@ export class HomeComponent implements OnInit {
   }
 
   getCharacter(): void {
-    this.loading = true;
+    this.loadingChange.emit(true);
+
     this.characterService.getRandomCharacter().subscribe({
       next: (data) => {
         this.character = data;
         this.recentRefreshToken++;
-        this.error = '';
-        setTimeout(() => {
-          this.loading = false;
-        }, 500);
+        this.errorChange.emit('');
+        this.loadingChange.emit(false);
       },
       error: (err) => {
         console.error(err);
-        this.error = 'Failed to load character data.';
-        this.loading = false;
+        this.errorChange.emit('Failed to load character data.');
+        this.loadingChange.emit(false);
       }
     });
   }

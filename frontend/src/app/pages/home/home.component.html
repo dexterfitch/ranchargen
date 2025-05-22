@@ -1,15 +1,30 @@
-<div class="container">
-    <div class="warning-section text-center">
-        <div *ngIf="loading">Loading...</div>
-        <div *ngIf="error" class="error">{{ error }}</div>
+<div class="row">
+    <div class="col-md-12 d-lg-none d-xl-none description-section">
+        <p class="fs-4">creative chaos for drawing and roleplay inspo</p>
+        <p>perfect for...</p>
+        <ul>
+            <li>art prompts</li>
+            <li>character design</li>
+            <li>roleplay</li>
+            <li>worldbuilding</li>
+            <li>writing</li>
+        </ul>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <app-header></app-header>
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <app-character-card 
+            [character]="character"
+            title="Random Character"
+        ></app-character-card>
+        <div class="d-lg-none d-xl-none random-button-section">
+            <button (click)="getCharacter()">
+                Get Another Random Character
+            </button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 d-lg-none d-xl-none description-section">
+    <div class="col-lg-4 d-none d-sm-none d-md-none d-lg-block ">
+        <div class="description-section">
             <p class="fs-4">creative chaos for drawing and roleplay inspo</p>
             <p>perfect for...</p>
             <ul>
@@ -20,42 +35,14 @@
                 <li>writing</li>
             </ul>
         </div>
+        <div class="random-button-section">
+            <button (click)="getCharacter()">
+                Get Another Random Character
+            </button>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-lg-4">
-            <app-character-card 
-                [character]="character"
-                title="Random Character"
-            ></app-character-card>
-            <div class="d-lg-none d-xl-none random-button-section">
-                <button (click)="getCharacter()" [disabled]="loading">
-                    {{ loading ? 'Loading...' : 'Get Another Random Character' }}
-                </button>
-                <div class="loading-spinner" *ngIf="loading" aria-hidden="true"></div>
-            </div>
-        </div>
-        <div class="col-lg-4 d-none d-sm-none d-md-none d-lg-block ">
-            <div class="description-section">
-                <p class="fs-4">creative chaos for drawing and roleplay inspo</p>
-                <p>perfect for...</p>
-                <ul>
-                    <li>art prompts</li>
-                    <li>character design</li>
-                    <li>roleplay</li>
-                    <li>worldbuilding</li>
-                    <li>writing</li>
-                </ul>
-            </div>
-            <div class="random-button-section">
-                <button (click)="getCharacter()" [disabled]="loading">
-                    {{ loading ? 'Loading...' : 'Get Another Random Character' }}
-                </button>
-                <div class="loading-spinner" *ngIf="loading" aria-hidden="true"></div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <p class="h2">Recent Characters</p>
-            <app-recent-characters [refreshTrigger]="recentRefreshToken" />
-        </div>
+    <div class="col-md-6 col-lg-4">
+        <p class="h2">Recent Characters</p>
+        <app-recent-characters [refreshTrigger]="recentRefreshToken" />
     </div>
 </div>

@@ -1,1 +1,19 @@
-<router-outlet></router-outlet>
+<div class="container-fluid p-0">
+    <app-header></app-header>
+    <div class="warning-section">
+        <div *ngIf="loading" class="loading-message">
+            Loading...
+        </div>
+        <div *ngIf="error" class="error-message">
+            {{ error }}
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <router-outlet (activate)="onRouteActivate($event)"></router-outlet>
+        </div>
+    </div>
+</div>
